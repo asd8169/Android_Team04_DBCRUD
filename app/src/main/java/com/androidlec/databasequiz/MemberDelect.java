@@ -69,7 +69,7 @@ public class MemberDelect extends AppCompatActivity {
                 sdNo = getIntent().getIntExtra("sdNO", 0);
                 new AlertDialog.Builder(MemberDelect.this)
                         .setTitle("학생 정보 삭제")
-                        .setMessage(Name + "님의 정보를 완전히 삭제합니다. \n 삭제된 정보는 복구되지 않습니다. 동의하십니까?")
+                        .setMessage(Name + "님의 정보를 완전히 삭제합니다. \n삭제하신 정보는 복구되지 않습니다. \n정말로 삭제하시겠습니까?")
                         .setCancelable(false)
 
                         //---네 버튼
