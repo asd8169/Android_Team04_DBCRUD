@@ -84,7 +84,7 @@ public class MemberDelect extends AppCompatActivity {
                                 try {
                                     //----삭제 성공
                                     DB = memberinfo.getWritableDatabase();
-                                    String query = "DELETE FROM member WHERE sdNo= '" + sdNo + "';";
+                                    String query = "DELETE FROM member WHERE sdNo= '" +sdNo+ "'; ";
                                     DB.execSQL(query);
 
 
