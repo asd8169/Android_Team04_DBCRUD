@@ -11,7 +11,7 @@ public class Memberinfo extends SQLiteOpenHelper {
 
     final static String TAG = "MemberInfo";
 
-    public Memberinfo(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public Memberinfo(@Nullable Context context) {
         super(context, "StudentInfo.db", null, 1);
     }
 
@@ -24,6 +24,8 @@ public class Memberinfo extends SQLiteOpenHelper {
         String query = "CREATE TABLE member(sdNo INTEGER PRIMARY KEY AUTOINCREMENT, sdName TEXT, sdDept TEXT, sdTel TEXT)";
         db.execSQL(query);
     }
+
+
 
 
 
