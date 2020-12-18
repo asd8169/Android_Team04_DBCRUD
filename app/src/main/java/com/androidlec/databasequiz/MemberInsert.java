@@ -11,9 +11,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
 
 public class MemberInsert extends AppCompatActivity {
 
@@ -126,23 +125,10 @@ public class MemberInsert extends AppCompatActivity {
 
 
 
-
-
-
         });
 
 
     }
-
-
-//
-//
-//    public void insert(){
-//
-//
-//    }
-
-
 
             //메뉴바 생성 & 처음으로 돌아가기
 
@@ -170,25 +156,6 @@ public class MemberInsert extends AppCompatActivity {
 
     }//------------------------
 
-//    DialogInterface.OnClickListener mClick = new DialogInterface.OnClickListener() {
-//        @Override
-//        public void onClick(DialogInterface dialog, int which) {
-//            if (which == DialogInterface.BUTTON_POSITIVE) { // num1 = 4
-//                num1 = 4;
-//
-//            } else { // num1 = 3
-//                num1 = 3;
-//
-//            }
-//            new AlertDialog.Builder(MainActivity.this)
-//                    .setTitle("질문")
-//                    .setMessage("우변을 선택하세요 선택하세요")
-//                    .setPositiveButton("6", mClick2)
-//                    .setNegativeButton("5", mClick2)
-//                    .show();
-//
-//        }
-//    };
 
 
 

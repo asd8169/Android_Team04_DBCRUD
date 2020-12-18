@@ -37,6 +37,7 @@ public class MemberUpdate extends AppCompatActivity {
         strsdName = bundle.getString("sdName");
         strsdDept = bundle.getString("sdDept");
         strsdTel = bundle.getString("sdTel");
+
       //  EditText 호출하기
         EditText sdNo = findViewById(R.id.sdNo_update);
         EditText sdName = findViewById(R.id.sdName_update);
@@ -55,11 +56,11 @@ public class MemberUpdate extends AppCompatActivity {
 
     SQLiteDatabase DB; //데이타 베이스 가져오기
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
+    View.OnClickListener onClickListener = new View.OnClickListener() { //여기서 에러
 
 
         //  EditText 호출하기
-        EditText sdNo = findViewById(R.id.sdNo_update);
+        EditText sdNo = findViewById(R.id.sdNo_update);// 여기서 에러
         EditText sdName = findViewById(R.id.sdName_update);
         EditText sdDept = findViewById(R.id.sdDept_update);
         EditText sdTel = findViewById(R.id.sdTel_update);
