@@ -33,7 +33,7 @@ public class MemberUpdate extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        strsdNo = bundle.getString("sdNo");
+        strsdNo = bundle.getString("sdNO");
         strsdName = bundle.getString("sdName");
         strsdDept = bundle.getString("sdDept");
         strsdTel = bundle.getString("sdTel");

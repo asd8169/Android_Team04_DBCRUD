@@ -80,10 +80,10 @@ public class MemberSelect extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MemberUpdate.class);
 
             //데이터 전달 putExtra
-            intent.putExtra("sdNO", "sdNO");
-            intent.putExtra("sdName","sdName");
-            intent.putExtra("sdDept","sdDept");
-            intent.putExtra("sdTel","sdTel");
+            intent.putExtra("sdNO", sdNO);
+            intent.putExtra("sdName",sdName);
+            intent.putExtra("sdDept",sdDept);
+            intent.putExtra("sdTel",sdTel);
 
             startActivity(intent);
 
@@ -97,10 +97,10 @@ public class MemberSelect extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MemberDelect.class);
 
             //데이터 전달 putExtra
-            intent.putExtra("sdNO", "sdNO");
-            intent.putExtra("sdName", "sdName");
-            intent.putExtra("sdDept", "sdDept");
-            intent.putExtra("sdTel", "sdTel");
+            intent.putExtra("sdNO", sdNO);
+            intent.putExtra("sdName", sdName);
+            intent.putExtra("sdDept", sdDept);
+            intent.putExtra("sdTel", sdTel);
 
             startActivity(intent);
             return false;
