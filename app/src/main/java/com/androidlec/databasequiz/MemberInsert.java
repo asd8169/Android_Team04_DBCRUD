@@ -36,12 +36,16 @@ public class MemberInsert extends AppCompatActivity {
         memberinfo = new Memberinfo(MemberInsert.this);
 
 
+        //editText 아이디 연결해주기
+
         insert_sdDept = findViewById(R.id.insert_sdDept);
         insert_sdName = findViewById(R.id.insert_sdName);
         insert_sdTel = findViewById(R.id.insert_sdTel);
 
 
 
+
+        // 입력 버튼 클릭 시, alert 창띄워주기
         findViewById(R.id.buttonInsert_Insert).setOnClickListener(new View.OnClickListener() {
             SQLiteDatabase DB;
 
