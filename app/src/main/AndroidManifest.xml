@@ -9,13 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DatabaseQuiz">
-        <activity android:name=".MemberDelect" android:label="학생 정보 삭제"></activity>
+
         <activity android:name=".MemberSelect" android:label="학생 정보 목록"/>
         <activity android:name=".MemberUpdate" android:label="학생 정보 수정"/>
         <activity android:name=".MemberInsert" android:label="학생 정보 입력"/>
         <activity android:name=".MainActivity" android:label="학생 정보 관리"/>
-        <activity android:name=".splash">
+
+        <activity android:name=".splash"/>
+            <activity android:name=".MemberDelect" android:label="학생 정보 삭제">
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
