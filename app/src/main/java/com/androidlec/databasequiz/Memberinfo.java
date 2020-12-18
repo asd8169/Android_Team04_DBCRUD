@@ -27,6 +27,8 @@ public class Memberinfo extends SQLiteOpenHelper {
 
 
 
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.v(TAG,"upgrade()");
