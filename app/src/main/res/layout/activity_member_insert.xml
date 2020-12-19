@@ -39,6 +39,7 @@
             android:id="@+id/insert_sdName"
             android:layout_width="142dp"
             android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
             android:maxLength="5"
             android:maxLines="1"
             />
