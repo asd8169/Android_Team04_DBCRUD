@@ -60,7 +60,7 @@ public class MemberUpdate extends AppCompatActivity {
 
 
         //  EditText 호출하기
-        EditText sdNo = findViewById(R.id.sdNo_update);// 여기서 에러
+        EditText sdNo = findViewById(R.id.sdNo_update);
         EditText sdName = findViewById(R.id.sdName_update);
         EditText sdDept = findViewById(R.id.sdDept_update);
         EditText sdTel = findViewById(R.id.sdTel_update);
