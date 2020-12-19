@@ -14,28 +14,26 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="학번은 자동으로 입력됩니다."
-        android:textSize="20sp"
-        android:layout_weight="2"
-        />
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이름 : "
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
+        <!-- 이름 최대 5글자 -->
         <EditText
             android:id="@+id/insert_sdName"
-            android:layout_width="100dp"
+            android:layout_width="142dp"
             android:layout_height="wrap_content"
+            android:maxLength="5"
             android:maxLines="1" />
 
     </LinearLayout>
@@ -43,9 +41,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,10 +49,12 @@
             android:text="전공 : "
             android:textSize="15sp" />
 
+        <!--전공 입력 최대글자 맞추기-->
         <EditText
             android:id="@+id/insert_sdDept"
-            android:layout_width="100dp"
+            android:layout_width="154dp"
             android:layout_height="wrap_content"
+            android:maxLength="9"
             android:maxLines="1" />
 
     </LinearLayout>
@@ -65,7 +63,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1"
         >
 
         <TextView
@@ -74,11 +71,13 @@
             android:text="전화번호 : "
             android:textSize="15sp" />
 
+        <!--전화번호 글자 11로 맞추기 -->
         <EditText
             android:id="@+id/insert_sdTel"
-            android:layout_width="100dp"
+            android:layout_width="146dp"
             android:layout_height="wrap_content"
             android:inputType="phone"
+            android:maxLength="11"
             android:maxLines="1" />
 
     </LinearLayout>
@@ -86,16 +85,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        >
+        android:layout_weight="8"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/buttonInsert_Insert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="입력"
-            android:layout_weight="1"
+
             />
 
     </LinearLayout>
