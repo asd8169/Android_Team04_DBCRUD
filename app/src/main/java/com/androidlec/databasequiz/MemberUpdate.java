@@ -14,14 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MemberUpdate extends AppCompatActivity {
     final static String TAG = "종찬";
     Memberinfo memberinfo;
     String sdNameImport, sdDeptImport, sdTelImport;
     int sdNoImport;
+
     EditText tvNo,tvName,tvDept,tvTel;
 
     @Override
@@ -39,9 +42,6 @@ public class MemberUpdate extends AppCompatActivity {
         sdTelImport = intent.getStringExtra("sdTel");
 
 
-
-        Log.v(TAG, String.valueOf(sdNoImport));
-
         //  EditText 호출하기
         tvNo = findViewById(R.id.sdNo_update);
         tvName = findViewById(R.id.sdName_update);
@@ -53,7 +53,6 @@ public class MemberUpdate extends AppCompatActivity {
         tvDept.setText(sdDeptImport);
         tvTel.setText(sdTelImport);
 
-
         findViewById(R.id.buttonUpdate_update).setOnClickListener(new View.OnClickListener() {
 
             //성공
@@ -61,6 +60,7 @@ public class MemberUpdate extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
 
 
                 //쿼리 문에 넣을 구문 작성
@@ -90,18 +90,18 @@ public class MemberUpdate extends AppCompatActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
-
-                Intent intent = getIntent();
-                sdNoImport = intent.getIntExtra("sdNO", 0);
-
-                String strsdNo = tvNo.getText().toString();
+                int strsdNo = Integer.parseInt(tvNo.getText().toString());
                 String strsdName = tvName.getText().toString();
                 String strsdDept = tvDept.getText().toString();
                 String strsdTel = tvTel.getText().toString();
 
+//                Log.v(TAG,strsdName);
+//                Log.v(TAG,Integer.toString(strsdNo));
+
                 try {
+                    memberinfo = new Memberinfo(MemberUpdate.this);
                     DB = memberinfo.getWritableDatabase();
-                    String query = "UPDATE member SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + sdNoImport + "';";
+                    String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + strsdNo + "';";
                     DB.execSQL(query);
                     memberinfo.close();
                     new AlertDialog.Builder(MemberUpdate.this)
@@ -142,6 +142,7 @@ public class MemberUpdate extends AppCompatActivity {
                         .show();
             }
         }
+
     };
 
 //---------------------------------------------------------------------------------
