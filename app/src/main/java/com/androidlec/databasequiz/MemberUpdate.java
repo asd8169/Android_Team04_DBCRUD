@@ -1,21 +1,17 @@
 package com.androidlec.databasequiz;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MemberUpdate extends AppCompatActivity {
     final static String TAG = "종찬";
@@ -60,6 +56,7 @@ public class MemberUpdate extends AppCompatActivity {
             public void onClick(View v) {
 
 
+
                 //쿼리 문에 넣을 구문 작성
                 String strsdNo = tvNo.getText().toString();
                 String strsdName = tvName.getText().toString();
@@ -87,7 +84,6 @@ public class MemberUpdate extends AppCompatActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
-
                 int strsdNo = Integer.parseInt(tvNo.getText().toString());
                 String strsdName = tvName.getText().toString();
                 String strsdDept = tvDept.getText().toString();
@@ -97,6 +93,7 @@ public class MemberUpdate extends AppCompatActivity {
 //                Log.v(TAG,Integer.toString(strsdNo));
 
                 try {
+                    memberinfo = new Memberinfo(MemberUpdate.this);
                     DB = memberinfo.getWritableDatabase();
                     String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + strsdNo + "';";
                     DB.execSQL(query);
@@ -139,6 +136,7 @@ public class MemberUpdate extends AppCompatActivity {
                         .show();
             }
         }
+
     };
 
 //---------------------------------------------------------------------------------
