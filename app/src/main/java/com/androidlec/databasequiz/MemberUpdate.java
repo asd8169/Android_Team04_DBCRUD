@@ -1,23 +1,29 @@
 package com.androidlec.databasequiz;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
 public class MemberUpdate extends AppCompatActivity {
     final static String TAG = "종찬";
     Memberinfo memberinfo;
-    String sdNameImport, sdDeptImport, sdTelImport;
-    int sdNoImport;
+    String sdNameImport, sdDeptImport, sdTelImport,sdNoImport;
 
     EditText tvNo,tvName,tvDept,tvTel;
 
@@ -29,7 +35,7 @@ public class MemberUpdate extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        sdNoImport = intent.getIntExtra("sdNO",0);
+        sdNoImport = intent.getStringExtra("sdNO");
 
         sdNameImport = intent.getStringExtra("sdName");
         sdDeptImport = intent.getStringExtra("sdDept");
@@ -42,7 +48,7 @@ public class MemberUpdate extends AppCompatActivity {
         tvDept = findViewById(R.id.sdDept_update);
         tvTel = findViewById(R.id.sdTel_update);
         // EditText 올리기
-        tvNo.setText(Integer.toString(sdNoImport));
+        tvNo.setText(sdNoImport);
         tvName.setText(sdNameImport);
         tvDept.setText(sdDeptImport);
         tvTel.setText(sdTelImport);
@@ -54,7 +60,6 @@ public class MemberUpdate extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
 
 
                 //쿼리 문에 넣을 구문 작성
@@ -84,32 +89,29 @@ public class MemberUpdate extends AppCompatActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
+
                 int strsdNo = Integer.parseInt(tvNo.getText().toString());
                 String strsdName = tvName.getText().toString();
                 String strsdDept = tvDept.getText().toString();
                 String strsdTel = tvTel.getText().toString();
 
-//                Log.v(TAG,strsdName);
-//                Log.v(TAG,Integer.toString(strsdNo));
-
-                try {
-                    memberinfo = new Memberinfo(MemberUpdate.this);
-                    DB = memberinfo.getWritableDatabase();
-                    String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + strsdNo + "';";
-                    DB.execSQL(query);
-                    memberinfo.close();
-                    new AlertDialog.Builder(MemberUpdate.this)
-                            .setTitle("")
-                            .setMessage("입력이 완료 되었습니다.")
-                            .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(MemberUpdate.this, MemberSelect.class);
-                                    startActivity(intent);
-                                }
-                            })
-                            .show();
+                        try {
+                            DB = memberinfo.getWritableDatabase();
+                            String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + strsdNo +"';";
+                            DB.execSQL(query);
+                            memberinfo.close();
+                            new AlertDialog.Builder(MemberUpdate.this) // 저장 후 입력 완료 되었다는 Alert 창, 확인 클릭 시 리스트 창으로 이동
+                                    .setTitle("")
+                                    .setMessage("입력이 완료 되었습니다.")
+                                    .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
+                                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) { // 리스트 창으로 이동해주는 메소드
+                                            Intent intent = new Intent(MemberUpdate.this, MemberSelect.class);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .show();
 
                 } catch (Exception e) {//실패시
                     e.printStackTrace();
@@ -136,7 +138,6 @@ public class MemberUpdate extends AppCompatActivity {
                         .show();
             }
         }
-
     };
 
 //---------------------------------------------------------------------------------
@@ -165,5 +166,25 @@ public class MemberUpdate extends AppCompatActivity {
         return true;
     }
 
+    //배경 터치 시 키보드 사라지게
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View view = getCurrentFocus();
+        InputMethodManager imm;
+        if (view != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && view instanceof EditText && !view.getClass().getName().startsWith("android.webkit.")) {
+            int scrcoords[] = new int[2];
+            view.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + view.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + view.getTop() - scrcoords[1];
+            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
+                ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 
 }//------------------------
+
+
+
+
+

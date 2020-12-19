@@ -35,6 +35,5 @@ public class Memberinfo extends SQLiteOpenHelper {
         String query = "DROP TABLE IF EXISTS member;";
         db.execSQL(query);
         onCreate(db);
-
     }
 }
