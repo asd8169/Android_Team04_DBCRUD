@@ -20,7 +20,8 @@ import android.widget.Toast;
 public class MemberUpdate extends AppCompatActivity {
     final static String TAG = "종찬";
     Memberinfo memberinfo;
-    String sdNameImport, sdDeptImport, sdTelImport,sdNoImport;
+    String sdNameImport, sdDeptImport, sdTelImport;
+    int sdNoImport;
 
     EditText tvNo,tvName,tvDept,tvTel;
 
@@ -32,7 +33,7 @@ public class MemberUpdate extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        sdNoImport = intent.getStringExtra("sdNO");
+        sdNoImport = intent.getIntExtra("sdNO",0);
 
         sdNameImport = intent.getStringExtra("sdName");
         sdDeptImport = intent.getStringExtra("sdDept");
@@ -45,7 +46,7 @@ public class MemberUpdate extends AppCompatActivity {
         tvDept = findViewById(R.id.sdDept_update);
         tvTel = findViewById(R.id.sdTel_update);
         // EditText 올리기
-        tvNo.setText(sdNoImport);
+        tvNo.setText(Integer.toString(sdNoImport));
         tvName.setText(sdNameImport);
         tvDept.setText(sdDeptImport);
         tvTel.setText(sdTelImport);
