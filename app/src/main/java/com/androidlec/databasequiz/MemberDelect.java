@@ -35,7 +35,7 @@ public class MemberDelect extends AppCompatActivity {
 
         //-----리스트에서 값 받아오기
         Intent intent = getIntent();
-        sdNo = intent.getIntExtra("sdNO",0); //받아오는 sdNo값이 defaultValue값으로 들어옴
+        sdNo = intent.getIntExtra("sdNO", 0); //받아오는 sdNo값이 defaultValue값으로 들어옴
         String sdName = intent.getStringExtra("sdName");
         String sdDept = intent.getStringExtra("sdDept");
         String sdTel = intent.getStringExtra("sdTel");
@@ -63,6 +63,10 @@ public class MemberDelect extends AppCompatActivity {
 
 
         btnDelete = findViewById(R.id.btn_delete_deletePage);
+
+
+        findViewById(R.id.btn_delete_deletePage).setOnClickListener(onClickListener);
+    }
 
         //---삭제버튼 onclick
         View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -108,7 +112,7 @@ public class MemberDelect extends AppCompatActivity {
 
             }
         };
-    }
+
 
 
 
