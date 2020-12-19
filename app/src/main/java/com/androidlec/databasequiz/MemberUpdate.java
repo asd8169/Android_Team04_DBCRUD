@@ -23,14 +23,22 @@ public class MemberUpdate extends AppCompatActivity {
 
     int sdNoImport;
     String sdNameImport, sdDeptImport, sdTelImport;
+    String strsdNo,strsdName,strsdDept,strsdTel;
 
     EditText tvNo,tvName,tvDept,tvTel;
+
+
+    SQLiteDatabase DB;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_update);
 
+
+        memberinfo = new Memberinfo(MemberUpdate.this);
 
         Intent intent = getIntent();
 
@@ -45,6 +53,7 @@ public class MemberUpdate extends AppCompatActivity {
         tvName = findViewById(R.id.sdName_update);
         tvDept = findViewById(R.id.sdDept_update);
         tvTel = findViewById(R.id.sdTel_update);
+
         // EditText 올리기
         tvNo.setText(Integer.toString(sdNoImport));
         tvName.setText(sdNameImport);
@@ -61,10 +70,9 @@ public class MemberUpdate extends AppCompatActivity {
 
 
                 //쿼리 문에 넣을 구문 작성
-                String strsdNo = tvNo.getText().toString();
-                String strsdName = tvName.getText().toString();
-                String strsdDept = tvDept.getText().toString();
-                String strsdTel = tvTel.getText().toString();
+                 strsdName = tvName.getText().toString();
+                 strsdDept = tvDept.getText().toString();
+                 strsdTel = tvTel.getText().toString();
 
                 new AlertDialog.Builder(MemberUpdate.this)
                         .setTitle("입력 확인")
@@ -80,53 +88,57 @@ public class MemberUpdate extends AppCompatActivity {
 
         });
     }
-    DialogInterface.OnClickListener mClick = new DialogInterface.OnClickListener() {
 
-        SQLiteDatabase DB;
+   DialogInterface.OnClickListener mClick = new DialogInterface.OnClickListener() {
+       @Override
+       public void onClick(DialogInterface dialogInterface, int i) {
 
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            if (which == DialogInterface.BUTTON_POSITIVE) {
 
-                String strsdNo = tvNo.getText().toString();
-                String strsdName = tvName.getText().toString();
-                String strsdDept = tvDept.getText().toString();
-                String strsdTel = tvTel.getText().toString();
+               //입력 받은 값 받아오기
+               strsdName = tvName.getText().toString();
+               strsdDept = tvDept.getText().toString();
+               strsdTel = tvTel.getText().toString();
 
-//               Log.v(TAG,strsdName);
-//               Log.v(TAG,Integer.toString(strsdNo));
+               try {
+                   DB = memberinfo.getWritableDatabase();
+                   String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" +
+                           strsdTel + "' WHERE sdNo = '" + strsdNo + "';";
+                   DB.execSQL(query);
+                   memberinfo.close();
 
-                try {
-                    DB = memberinfo.getWritableDatabase();
-                    String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" +
-                            strsdTel + "' WHERE sdNo = '" + strsdNo + "';";
-                    DB.execSQL(query);
-                    memberinfo.close();
-                    new AlertDialog.Builder(MemberUpdate.this)
-                            .setTitle("")
-                            .setMessage("입력이 완료 되었습니다.")
-                            .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(MemberUpdate.this, MemberSelect.class);
-                                    startActivity(intent);
-                                }
-                            })
-                            .show();
+                   new AlertDialog.Builder(MemberUpdate.this) // 저장 후 입력 완료 되었다는 Alert 창, 확인 클릭 시 리스트 창으로 이동
+                           .setTitle("")
+                           .setMessage("입력이 완료 되었습니다.")
+                           .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
+                           .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialog, int which) { // 리스트 창으로 이동해주는 메소드
+                                   Intent intent = new Intent(MemberUpdate.this, MemberSelect.class);
 
-                } catch (Exception e) {//실패시
-                    e.printStackTrace();
-                    new AlertDialog.Builder(MemberUpdate.this)
-                            .setTitle("경고!")
-                            .setMessage("입력에 실패 하였습니다.")
-                            .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
-                            .setPositiveButton("확인", null)
-                            .show();
-                }
-            }
-        }
-    };
+                                   intent.putExtra("sdNO",strsdNo);
+                                   intent.putExtra("sdName",strsdName);
+                                   intent.putExtra("sdDept", strsdDept);
+                                   intent.putExtra("sdTel",strsdTel);
+
+                                   startActivity(intent);
+                               }
+                           })
+                           .show();
+
+
+               } catch (Exception e) { // 입력 실패시
+                   e.printStackTrace();
+                   new AlertDialog.Builder(MemberUpdate.this)
+                           .setTitle("경고!")
+                           .setMessage("입력에 실패 하였습니다.")
+                           .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
+                           .setPositiveButton("확인", null)
+                           .show();
+               }
+
+           }
+
+   };
 
     //아니오 눌렀을경우
     DialogInterface.OnClickListener mClickNo = new DialogInterface.OnClickListener() {
