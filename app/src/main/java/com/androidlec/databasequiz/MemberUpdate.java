@@ -20,7 +20,8 @@ import android.widget.Toast;
 public class MemberUpdate extends AppCompatActivity {
     final static String TAG = "종찬";
     Memberinfo memberinfo;
-    String sdNameImport, sdDeptImport, sdTelImport,sdNoImport;
+    String sdNameImport, sdDeptImport, sdTelImport;
+    int sdNoImport;
 
     EditText tvNo,tvName,tvDept,tvTel;
 
@@ -32,8 +33,7 @@ public class MemberUpdate extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
-        sdNoImport = intent.getStringExtra("sdNO");
+        sdNoImport = intent.getIntExtra("sdNO",0);
 
         sdNameImport = intent.getStringExtra("sdName");
         sdDeptImport = intent.getStringExtra("sdDept");
@@ -45,16 +45,11 @@ public class MemberUpdate extends AppCompatActivity {
         tvName = findViewById(R.id.sdName_update);
         tvDept = findViewById(R.id.sdDept_update);
         tvTel = findViewById(R.id.sdTel_update);
-
         // EditText 올리기
-        tvNo.setText(sdNoImport);
+        tvNo.setText(Integer.toString(sdNoImport));
         tvName.setText(sdNameImport);
         tvDept.setText(sdDeptImport);
         tvTel.setText(sdTelImport);
-
-
-
-
 
         findViewById(R.id.buttonUpdate_update).setOnClickListener(new View.OnClickListener() {
 
@@ -65,20 +60,11 @@ public class MemberUpdate extends AppCompatActivity {
             public void onClick(View v) {
 
 
-        //  EditText 호출하기
-        EditText sdNo = findViewById(R.id.sdNo_update);
-        EditText sdName = findViewById(R.id.sdName_update);
-        EditText sdDept = findViewById(R.id.sdDept_update);
-        EditText sdTel = findViewById(R.id.sdTel_update);
-
-
-
-                sdNoImport = intent.getStringExtra("sdNO");
-
+                //쿼리 문에 넣을 구문 작성
+                String strsdNo = tvNo.getText().toString();
                 String strsdName = tvName.getText().toString();
                 String strsdDept = tvDept.getText().toString();
                 String strsdTel = tvTel.getText().toString();
-
 
                 new AlertDialog.Builder(MemberUpdate.this)
                         .setTitle("입력 확인")
@@ -102,20 +88,17 @@ public class MemberUpdate extends AppCompatActivity {
         public void onClick(DialogInterface dialog, int which) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
 
-
+                int strsdNo = Integer.parseInt(tvNo.getText().toString());
                 String strsdName = tvName.getText().toString();
                 String strsdDept = tvDept.getText().toString();
                 String strsdTel = tvTel.getText().toString();
 
-                Intent intent = getIntent();
-
-                sdNoImport = intent.getStringExtra("sdNO");
 //                Log.v(TAG,strsdName);
 //                Log.v(TAG,Integer.toString(strsdNo));
 
                 try {
                     DB = memberinfo.getWritableDatabase();
-                    String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + sdNoImport + "';";
+                    String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + strsdNo + "';";
                     DB.execSQL(query);
                     memberinfo.close();
                     new AlertDialog.Builder(MemberUpdate.this)
