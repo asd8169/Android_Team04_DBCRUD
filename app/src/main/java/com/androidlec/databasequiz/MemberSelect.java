@@ -7,12 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,8 +24,10 @@ public class MemberSelect extends AppCompatActivity {
     private ArrayList<Select_list> data = null;
     private Select_list_Adapter adapter = null;
     private ListView listView = null;
+    private static String TAG = "Status";
 
-    int sdNO;
+
+    int sdNo;
     String sdName,sdDept,sdTel;
 
     Memberinfo studentInfo;
@@ -49,17 +54,20 @@ public class MemberSelect extends AppCompatActivity {
             SQLiteDatabase DB;
             DB = studentInfo.getReadableDatabase();
             String query = "SELECT * FROM member;";
+
+
+
             Cursor cursor = DB.rawQuery(query, null);
 
             StringBuffer stringBuffer = new StringBuffer();
 
             while (cursor.moveToNext()) {
-                sdNO = cursor.getInt(0);
+                sdNo = cursor.getInt(0);
                 sdName = cursor.getString(1);
                 sdDept = cursor.getString(2);
                 sdTel = cursor.getString(3);
 
-                data.add(new Select_list(sdNO, sdName, sdDept, sdTel));
+                data.add(new Select_list(sdNo, sdName, sdDept, sdTel));
             }
 
             adapter = new Select_list_Adapter(MemberSelect.this, R.layout.custom_layout,data);
@@ -77,10 +85,12 @@ public class MemberSelect extends AppCompatActivity {
     AdapterView.OnItemClickListener click = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             Intent intent = new Intent(getApplicationContext(), MemberUpdate.class);
 
             //데이터 전달 putExtra
-            intent.putExtra("sdNO", sdNO);
+            intent.putExtra("sdNO", sdNo);
+            Log.d(TAG, "onItemClick: " + sdNo);
             intent.putExtra("sdName",sdName);
             intent.putExtra("sdDept",sdDept);
             intent.putExtra("sdTel",sdTel);
@@ -90,14 +100,22 @@ public class MemberSelect extends AppCompatActivity {
         }
     };
 
+    //리스트 길게 클릭
     AdapterView.OnItemLongClickListener longclick = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
             Intent intent = new Intent(getApplicationContext(), MemberDelect.class);
 
+//            Cursor cursor = Select_list_Adapter.g;
+//            String index = cursor.getString(cursor.getColumnIndex("_id));
+//            int id = Integer.parseInt(index);
+
             //데이터 전달 putExtra
-            intent.putExtra("sdNO", sdNO);
+            intent.putExtra("sdNO", sdNo);
+            Log.d(TAG, "OnItemLongClickListener: " + sdNo);
+
+
             intent.putExtra("sdName", sdName);
             intent.putExtra("sdDept", sdDept);
             intent.putExtra("sdTel", sdTel);
@@ -107,6 +125,8 @@ public class MemberSelect extends AppCompatActivity {
         }
 
     };
+
+
 
     //메뉴바 생성 & 처음으로 돌아가기
     @Override

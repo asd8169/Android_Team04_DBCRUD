@@ -14,19 +14,23 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="학번은 자동으로 입력됩니다."
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_weight="2"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이름 : "
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
         <EditText
             android:id="@+id/insert_sdName"
@@ -39,7 +43,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_weight="1"
         >
 
         <TextView
@@ -79,15 +86,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="8"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
 
         <Button
             android:id="@+id/buttonInsert_Insert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="입력"
-
+            android:layout_weight="1"
             />
 
     </LinearLayout>
