@@ -24,7 +24,6 @@ public class MemberDelect extends AppCompatActivity {
     Button btnDelete;
     Memberinfo memberinfo;
     String Name;
-
     int sdNo;
 
     //----시동
@@ -37,8 +36,7 @@ public class MemberDelect extends AppCompatActivity {
         //-----리스트에서 값 받아오기
         Intent intent = getIntent();
 
-        int sdNo = intent.getIntExtra("sdNo", 0); //받아오는 sdNo값이 defaultValue값으로 들어옴
-
+        int sdNo = intent.getIntExtra("sdNO", 0); //받아오는 sdNo값이 defaultValue값으로 들어옴
         String sdName = intent.getStringExtra("sdName");
         String sdDept = intent.getStringExtra("sdDept");
         String sdTel = intent.getStringExtra("sdTel");
@@ -68,9 +66,10 @@ public class MemberDelect extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                sdNo = getIntent().getIntExtra("sdNO", 0);
                 new AlertDialog.Builder(MemberDelect.this)
                         .setTitle("학생 정보 삭제")
-                        .setMessage(Name + "님의 정보를 완전히 삭제합니다. \n 삭제된 정보는 복구되지 않습니다. 동의하십니까?")
+                        .setMessage(Name + "님의 정보를 완전히 삭제합니다. \n삭제하신 정보는 복구되지 않습니다. \n정말로 삭제하시겠습니까?")
                         .setCancelable(false)
 
                         //---네 버튼
@@ -84,7 +83,7 @@ public class MemberDelect extends AppCompatActivity {
                                 try {
                                     //----삭제 성공
                                     DB = memberinfo.getWritableDatabase();
-                                    String query = "DELETE FROM member WHERE sdNo= '" + sdNo + "';";
+                                    String query = "DELETE FROM member WHERE sdNo='" + sdNo + "';";
                                     DB.execSQL(query);
 
 

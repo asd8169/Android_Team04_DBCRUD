@@ -11,6 +11,7 @@
         android:theme="@style/Theme.DatabaseQuiz">
 
         <activity android:name=".splash">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
