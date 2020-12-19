@@ -20,7 +20,9 @@ import android.widget.Toast;
 public class MemberUpdate extends AppCompatActivity {
     final static String TAG = "종찬";
     Memberinfo memberinfo;
-    String sdNameImport, sdDeptImport, sdTelImport,sdNoImport;
+
+    int sdNoImport;
+    String sdNameImport, sdDeptImport, sdTelImport;
 
     EditText tvNo,tvName,tvDept,tvTel;
 
@@ -32,8 +34,7 @@ public class MemberUpdate extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        sdNoImport = intent.getStringExtra("sdNO");
-
+        sdNoImport = intent.getIntExtra("sdNO", 0);
         sdNameImport = intent.getStringExtra("sdName");
         sdDeptImport = intent.getStringExtra("sdDept");
         sdTelImport = intent.getStringExtra("sdTel");
@@ -45,7 +46,7 @@ public class MemberUpdate extends AppCompatActivity {
         tvDept = findViewById(R.id.sdDept_update);
         tvTel = findViewById(R.id.sdTel_update);
         // EditText 올리기
-        tvNo.setText(sdNoImport);
+        tvNo.setText(Integer.toString(sdNoImport));
         tvName.setText(sdNameImport);
         tvDept.setText(sdDeptImport);
         tvTel.setText(sdTelImport);
@@ -80,24 +81,25 @@ public class MemberUpdate extends AppCompatActivity {
         });
     }
     DialogInterface.OnClickListener mClick = new DialogInterface.OnClickListener() {
-        SQLiteDatabase DB;
 
+        SQLiteDatabase DB;
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
 
-                int strsdNo = Integer.parseInt(tvNo.getText().toString());
+                String strsdNo = tvNo.getText().toString();
                 String strsdName = tvName.getText().toString();
                 String strsdDept = tvDept.getText().toString();
                 String strsdTel = tvTel.getText().toString();
 
-//                Log.v(TAG,strsdName);
-//                Log.v(TAG,Integer.toString(strsdNo));
+//               Log.v(TAG,strsdName);
+//               Log.v(TAG,Integer.toString(strsdNo));
 
                 try {
                     DB = memberinfo.getWritableDatabase();
-                    String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + strsdNo + "';";
+                    String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" +
+                            strsdTel + "' WHERE sdNo = '" + strsdNo + "';";
                     DB.execSQL(query);
                     memberinfo.close();
                     new AlertDialog.Builder(MemberUpdate.this)
@@ -125,6 +127,7 @@ public class MemberUpdate extends AppCompatActivity {
             }
         }
     };
+
     //아니오 눌렀을경우
     DialogInterface.OnClickListener mClickNo = new DialogInterface.OnClickListener() {
         @Override
