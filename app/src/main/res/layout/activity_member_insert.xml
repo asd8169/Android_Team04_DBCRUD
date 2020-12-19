@@ -14,7 +14,9 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="학번은 자동으로 입력됩니다."
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -102,8 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="입력"
-
-
+            android:layout_weight="1"
             />
 
     </LinearLayout>

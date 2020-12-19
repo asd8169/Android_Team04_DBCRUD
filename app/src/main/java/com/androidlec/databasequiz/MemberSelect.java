@@ -59,7 +59,7 @@ public class MemberSelect extends AppCompatActivity {
                 sdDept = cursor.getString(2);
                 sdTel = cursor.getString(3);
 
-                data.add(new Select_list(sdNO, sdName, sdDept, sdTel));
+                data.add(new Select_list(sdNO ,  "이름 : " + sdName, "학과 : " + sdDept, "전화번호 : " + sdTel));
             }
 
             adapter = new Select_list_Adapter(MemberSelect.this, R.layout.custom_layout,data);
