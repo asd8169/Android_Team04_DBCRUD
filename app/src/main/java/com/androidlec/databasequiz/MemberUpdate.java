@@ -73,7 +73,6 @@ public class MemberUpdate extends AppCompatActivity {
                         .setNegativeButton("아니오", mClickNo)
                         .show();
 
-
             }
 
 

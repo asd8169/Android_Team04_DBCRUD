@@ -23,6 +23,7 @@ public class MemberDelect extends AppCompatActivity {
     TextView tvNo, tvName, tvDept, tvTel;
     Button btnDelete;
     Memberinfo memberinfo;
+    SQLiteDatabase DB;
     String Name;
     int sdNo;
 
@@ -35,40 +36,42 @@ public class MemberDelect extends AppCompatActivity {
 
         //-----리스트에서 값 받아오기
         Intent intent = getIntent();
-
-        sdNo = intent.getIntExtra("sdNO", 0); //받아오는 sdNo값이 defaultValue값으로 들어옴
+        sdNo = intent.getIntExtra("sdNO",0); //받아오는 sdNo값이 defaultValue값으로 들어옴
         String sdName = intent.getStringExtra("sdName");
         String sdDept = intent.getStringExtra("sdDept");
         String sdTel = intent.getStringExtra("sdTel");
+        //---------------
 
+        //-------xml 연결
         tvNo = findViewById(R.id.tv_sdNo_deletePage);
         tvName = findViewById(R.id.tv_sdName_deletePage);
         tvDept = findViewById(R.id.tv_sdDept_deletePage);
         tvTel = findViewById(R.id.tv_sdTel_deletePage);
+        //--------------
 
-        Toast.makeText(MemberDelect.this, "sdNo : " + sdNo + " sdName :" + sdName, Toast.LENGTH_SHORT).show();
 
+        //--------xml에 값 세팅
         tvNo.setText(Integer.toString(sdNo));//학생 정보 목록에서 롱클릭시 sdNo값 다르게 뜸!
         tvName.setText(sdName);
         tvDept.setText(sdDept);
         tvTel.setText(sdTel);
+        //----------------
+
 
         Name = sdName;
 
         memberinfo = new Memberinfo(MemberDelect.this);
 
 
-        findViewById(R.id.btn_delete_deletePage).setOnClickListener(onClickListener);
-    }
+        btnDelete = findViewById(R.id.btn_delete_deletePage);
+
         //---삭제버튼 onclick
         View.OnClickListener onClickListener = new View.OnClickListener() {
             SQLiteDatabase DB;
 
             @Override
             public void onClick(View v) {
-
-//                sdNo = getIntent().getIntExtra("sdNO", 0);
-
+                sdNo = getIntent().getIntExtra("sdNO", 0);
                 new AlertDialog.Builder(MemberDelect.this)
                         .setTitle("학생 정보 삭제")
                         .setMessage(Name + "님의 정보를 완전히 삭제합니다. \n삭제하신 정보는 복구되지 않습니다. \n정말로 삭제하시겠습니까?")
@@ -86,13 +89,11 @@ public class MemberDelect extends AppCompatActivity {
                                     //----삭제 성공
                                     DB = memberinfo.getWritableDatabase();
                                     String query = "DELETE FROM member WHERE sdNo='" + sdNo + "';";
-
                                     DB.execSQL(query);
 
 
                                     memberinfo.close();
                                     Toast.makeText(MemberDelect.this, "delete OK!", Toast.LENGTH_SHORT).show();
-
                                 } catch (Exception e) {
                                     //----삭제 실패
                                     e.printStackTrace();
@@ -108,6 +109,7 @@ public class MemberDelect extends AppCompatActivity {
 
             }
         };
+    }
 
 
 
@@ -131,8 +133,7 @@ public class MemberDelect extends AppCompatActivity {
 
 
 
-
-//-------------------------------------------------Default end
+    //-------------------------------------------------Default end
     //메뉴바 생성 & 처음으로 돌아가기
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
