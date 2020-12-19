@@ -23,7 +23,7 @@ public class MemberSelect extends AppCompatActivity {
     private ListView listView = null;
 
     int sdNO;
-    String sdName,sdDept,sdTel;
+    String sdName, sdDept, sdTel;
 
     Memberinfo studentInfo;
 
@@ -40,7 +40,7 @@ public class MemberSelect extends AppCompatActivity {
 
     }//oncreate
 
-    public void selectall(){
+    public void selectall() {
         studentInfo = new Memberinfo(MemberSelect.this);
         data = new ArrayList<Select_list>();
         try {
@@ -59,15 +59,15 @@ public class MemberSelect extends AppCompatActivity {
                 sdDept = cursor.getString(2);
                 sdTel = cursor.getString(3);
 
-                data.add(new Select_list(sdNO ,  sdName, sdDept, sdTel));
+                data.add(new Select_list(sdNO, sdName, sdDept, sdTel));
             }
 
-            adapter = new Select_list_Adapter(MemberSelect.this, R.layout.custom_layout,data);
+            adapter = new Select_list_Adapter(MemberSelect.this, R.layout.custom_layout, data);
             listView = findViewById(R.id.lv_select);
             listView.setAdapter(adapter);
             cursor.close();
             studentInfo.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -81,9 +81,9 @@ public class MemberSelect extends AppCompatActivity {
 
             //데이터 전달 putExtra
             intent.putExtra("sdNO", data.get(position).getSdNo());
-            intent.putExtra("sdName",data.get(position).getSdName());
+            intent.putExtra("sdName", data.get(position).getSdName());
             intent.putExtra("sdDept", data.get(position).getSdDept());
-            intent.putExtra("sdTel",data.get(position).getSdTel());
+            intent.putExtra("sdTel", data.get(position).getSdTel());
 
             startActivity(intent);
 
@@ -130,7 +130,6 @@ public class MemberSelect extends AppCompatActivity {
         }
         return true;
     }
-
 
 
 }
