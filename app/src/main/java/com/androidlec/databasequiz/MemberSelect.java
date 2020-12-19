@@ -33,7 +33,7 @@ public class MemberSelect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_select);
 
-       selectall();
+        selectall();
 
         listView.setOnItemClickListener(click);
         listView.setOnItemLongClickListener(longclick);
@@ -59,7 +59,7 @@ public class MemberSelect extends AppCompatActivity {
                 sdDept = cursor.getString(2);
                 sdTel = cursor.getString(3);
 
-                data.add(new Select_list(sdNO, sdName, sdDept, sdTel));
+                data.add(new Select_list(sdNO ,  sdName, sdDept, sdTel));
             }
 
             adapter = new Select_list_Adapter(MemberSelect.this, R.layout.custom_layout,data);

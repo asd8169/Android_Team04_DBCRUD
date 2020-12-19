@@ -33,5 +33,8 @@ public class Memberinfo extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.v(TAG,"upgrade()");
         String query = "DROP TABLE IF EXISTS member;";
+        db.execSQL(query);
+        onCreate(db);
+
     }
 }

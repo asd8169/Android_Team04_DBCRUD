@@ -1,18 +1,25 @@
 package com.androidlec.databasequiz;
 
 import androidx.annotation.NonNull;
+
+import android.content.Context;
+import android.view.Menu;
+import android.view.MenuItem;
+
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
+
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,50 +76,50 @@ public class MemberDelect extends AppCompatActivity {
         findViewById(R.id.btn_delete_deletePage).setOnClickListener(onClickListener);
     }
 
-        //---삭제버튼 onclick
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            SQLiteDatabase DB;
+    //---삭제버튼 onclick
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        SQLiteDatabase DB;
 
-            @Override
-            public void onClick(View v) {
-                sdNo = getIntent().getIntExtra("sdNO", 0);
-                new AlertDialog.Builder(MemberDelect.this)
-                        .setTitle("학생 정보 삭제")
-                        .setMessage(Name + "님의 정보를 완전히 삭제합니다. \n삭제하신 정보는 복구되지 않습니다. \n정말로 삭제하시겠습니까?")
-                        .setCancelable(false)
+        @Override
+        public void onClick(View v) {
+            sdNo = getIntent().getIntExtra("sdNO", 0);
+            new AlertDialog.Builder(MemberDelect.this)
+                    .setTitle("학생 정보 삭제")
+                    .setMessage(Name + "님의 정보를 완전히 삭제합니다. \n삭제하신 정보는 복구되지 않습니다. \n정말로 삭제하시겠습니까?")
+                    .setCancelable(false)
 
-                        //---네 버튼
-                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                    //---네 버튼
+                    .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                                Intent intent = new Intent(MemberDelect.this, MemberSelect.class);
-                                startActivity(intent);
+                            Intent intent = new Intent(MemberDelect.this, MemberSelect.class);
+                            startActivity(intent);
 
-                                try {
-                                    //----삭제 성공
-                                    DB = memberinfo.getWritableDatabase();
-                                    String query = "DELETE FROM member WHERE sdNo='" + sdNo + "';";
-                                    DB.execSQL(query);
+                            try {
+                                //----삭제 성공
+                                DB = memberinfo.getWritableDatabase();
+                                String query = "DELETE FROM member WHERE sdNo='" + sdNo + "';";
+                                DB.execSQL(query);
 
 
-                                    memberinfo.close();
-                                    Toast.makeText(MemberDelect.this, "delete OK!", Toast.LENGTH_SHORT).show();
-                                } catch (Exception e) {
-                                    //----삭제 실패
-                                    e.printStackTrace();
-                                    Toast.makeText(MemberDelect.this, "delete Error", Toast.LENGTH_SHORT).show();
-                                }
-
+                                memberinfo.close();
+                                Toast.makeText(MemberDelect.this, "delete OK!", Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                //----삭제 실패
+                                e.printStackTrace();
+                                Toast.makeText(MemberDelect.this, "delete Error", Toast.LENGTH_SHORT).show();
                             }
-                        })
 
-                        //---아니오 버튼
-                        .setNegativeButton("아니오", null)
-                        .show();
+                        }
+                    })
 
-            }
-        };
+                    //---아니오 버튼
+                    .setNegativeButton("아니오", null)
+                    .show();
+
+        }
+    };
 
 
 
@@ -159,5 +166,19 @@ public class MemberDelect extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+    //배경 터치 시 키보드 사라지게
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View view = getCurrentFocus();
+        InputMethodManager imm;
+        if (view != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && view instanceof EditText && !view.getClass().getName().startsWith("android.webkit.")) {
+            int scrcoords[] = new int[2];
+            view.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + view.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + view.getTop() - scrcoords[1];
+            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
+                ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
