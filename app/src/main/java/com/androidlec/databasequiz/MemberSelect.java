@@ -59,7 +59,7 @@ public class MemberSelect extends AppCompatActivity {
                 sdDept = cursor.getString(2);
                 sdTel = cursor.getString(3);
 
-                data.add(new Select_list(sdNO ,  sdName, sdDept, sdTel));
+                data.add(new Select_list(sdNO , sdName, sdDept, sdTel));
             }
 
             adapter = new Select_list_Adapter(MemberSelect.this, R.layout.custom_layout,data);
@@ -73,7 +73,7 @@ public class MemberSelect extends AppCompatActivity {
 
     }
 
-    //리스트 짧게 클릭
+    //리스트 짧게 클릭했을 때 데이터 전달
     AdapterView.OnItemClickListener click = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -90,6 +90,8 @@ public class MemberSelect extends AppCompatActivity {
         }
     };
 
+
+    //리스트 길게 클릭했을 때 데이터 전달
     AdapterView.OnItemLongClickListener longclick = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

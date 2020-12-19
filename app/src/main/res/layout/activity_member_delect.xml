@@ -31,22 +31,31 @@
             android:id="@+id/tv_sdNo_deletePage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="학번"
+            android:textColor="@color/black"
+            />
         <TextView
             android:id="@+id/tv_sdName_deletePage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            />
         <TextView
             android:id="@+id/tv_sdDept_deletePage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            />
         <TextView
             android:id="@+id/tv_sdTel_deletePage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            />
 
     </LinearLayout>
 
@@ -54,13 +63,13 @@
 <!--    삭제 버튼   -->
     <Button
         android:id="@+id/btn_delete_deletePage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
         android:text="삭제"
+        android:background="@drawable/button"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         />
-
-
 
 
 

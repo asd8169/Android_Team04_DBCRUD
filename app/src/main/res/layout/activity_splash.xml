@@ -16,13 +16,15 @@
 
 
     <TextView
-        android:text="copyright2020"
-        android:layout_width="match_parent"
+        android:text="copyright2020.도하진,고종찬,박인우,주혜정,김보람 all rights reserved"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:gravity="center"
         android:layout_weight="0"
-        android:textSize="20sp"
+        android:textSize="12sp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal"
+
         />
 
 

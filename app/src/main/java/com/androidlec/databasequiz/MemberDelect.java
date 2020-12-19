@@ -51,10 +51,11 @@ public class MemberDelect extends AppCompatActivity {
 
 
         //--------xml에 값 세팅
-        tvNo.setText(Integer.toString(sdNo));//학생 정보 목록에서 롱클릭시 sdNo값 다르게 뜸!
-        tvName.setText(sdName);
-        tvDept.setText(sdDept);
-        tvTel.setText(sdTel);
+        tvNo.setText(("학번 : " + Integer.toString(sdNo)));//학생 정보 목록에서 롱클릭시 sdNo값 다르게 뜸!
+        tvName.setText("이름 : " + sdName);
+
+        tvDept.setText("전공 : " + sdDept);
+        tvTel.setText("전화번호 : " + sdTel);
         //----------------
 
 

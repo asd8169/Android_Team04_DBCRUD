@@ -7,24 +7,37 @@
     android:orientation="vertical"
     tools:context=".MemberUpdate">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="수정할 정보를 입력해 주세요."
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
+        android:layout_marginTop="100dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="학번" />
+            android:text="학번 : " />
 
        <EditText
            android:id="@+id/sdNo_update"
-           android:layout_width="wrap_content"
+           android:layout_width="150dp"
            android:layout_height="wrap_content"
-           android:layout_weight="1"
            android:enabled="false"
+           android:background="@null"
+           android:textColor="@color/black"
            />
 
 
@@ -33,23 +46,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="이름"
+            android:text="이름 : "
             />
 
 
         <EditText
             android:id="@+id/sdName_update"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:maxLength="5"
+
+            />
 
 
     </LinearLayout>
@@ -57,21 +71,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="전공"
+            android:text="전공 : "
             android:maxLines="1"/>
 
+
+        <!--전공 입력 최대글자 맞추기-->
         <EditText
             android:id="@+id/sdDept_update"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:maxLength="9"
+            android:maxLines="1"
+
+            />
 
 
     </LinearLayout>
@@ -79,31 +97,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="전화번호" />
+            android:text="전화번호 : " />
 
+
+        <!--전화번호 글자 11로 맞추기 -->
         <EditText
             android:id="@+id/sdTel_update"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:maxLength="11"
+            android:maxLines="1"
+
+            />
 
 
     </LinearLayout>
 
     <Button
         android:id="@+id/buttonUpdate_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button"
         android:text="수정하기" />
+
+
 
 
 </LinearLayout>
