@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,45 +20,49 @@ import android.widget.Toast;
 public class MemberUpdate extends AppCompatActivity {
     final static String TAG = "종찬";
     Memberinfo memberinfo;
-    String strsdNo,strsdName,strsdDept,strsdTel;
+    String sdNameImport, sdDeptImport, sdTelImport,sdNoImport;
 
-
-
+    EditText tvNo,tvName,tvDept,tvTel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_update);
-        //업데이트 버튼
-        findViewById(R.id.buttonUpdate_update).setOnClickListener(onClickListener);
+
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-
-        strsdNo = bundle.getString("sdNo");
-        strsdName = bundle.getString("sdName");
-        strsdDept = bundle.getString("sdDept");
-        strsdTel = bundle.getString("sdTel");
-
-      //  EditText 호출하기
-        EditText sdNo = findViewById(R.id.sdNo_update);
-        EditText sdName = findViewById(R.id.sdName_update);
-        EditText sdDept = findViewById(R.id.sdDept_update);
-        EditText sdTel = findViewById(R.id.sdTel_update);
-     // EditText 올리기
-        sdNo.setText(strsdNo);
-        sdName.setText(strsdName);
-        sdDept.setText(strsdDept);
-        sdTel.setText(strsdTel);
 
 
-    }
+        sdNoImport = intent.getStringExtra("sdNO");
+
+        sdNameImport = intent.getStringExtra("sdName");
+        sdDeptImport = intent.getStringExtra("sdDept");
+        sdTelImport = intent.getStringExtra("sdTel");
+
+
+        //  EditText 호출하기
+        tvNo = findViewById(R.id.sdNo_update);
+        tvName = findViewById(R.id.sdName_update);
+        tvDept = findViewById(R.id.sdDept_update);
+        tvTel = findViewById(R.id.sdTel_update);
+
+        // EditText 올리기
+        tvNo.setText(sdNoImport);
+        tvName.setText(sdNameImport);
+        tvDept.setText(sdDeptImport);
+        tvTel.setText(sdTelImport);
 
 
 
-    SQLiteDatabase DB; //데이타 베이스 가져오기
 
-    View.OnClickListener onClickListener = new View.OnClickListener() { //여기서 에러
+
+        findViewById(R.id.buttonUpdate_update).setOnClickListener(new View.OnClickListener() {
+
+            //성공
+
+
+            @Override
+            public void onClick(View v) {
 
 
         //  EditText 호출하기
@@ -64,49 +70,96 @@ public class MemberUpdate extends AppCompatActivity {
         EditText sdName = findViewById(R.id.sdName_update);
         EditText sdDept = findViewById(R.id.sdDept_update);
         EditText sdTel = findViewById(R.id.sdTel_update);
-        //쿼리 문에 넣을 구문 작성
-        String strsdNo = sdNo.getText().toString();
-        String strsdName = sdName.getText().toString();
-        String strsdDept = sdDept.getText().toString();
-        String strsdTel = sdTel.getText().toString();
 
+
+
+                sdNoImport = intent.getStringExtra("sdNO");
+
+                String strsdName = tvName.getText().toString();
+                String strsdDept = tvDept.getText().toString();
+                String strsdTel = tvTel.getText().toString();
+
+
+                new AlertDialog.Builder(MemberUpdate.this)
+                        .setTitle("입력 확인")
+                        .setMessage("이름 : " + strsdName + "\n" + "전공 : " + strsdDept + "\n" + "전화번호 : " + strsdTel + "\n" + "입력하신 정보가 맞습니까?")
+                        .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
+                        .setPositiveButton("네", mClick)
+                        .setNegativeButton("아니오", mClickNo)
+                        .show();
+
+            }
+
+
+
+        });
+    }
+    DialogInterface.OnClickListener mClick = new DialogInterface.OnClickListener() {
+        SQLiteDatabase DB;
 
 
         @Override
-        public void onClick(View v) {
+        public void onClick(DialogInterface dialog, int which) {
+            if (which == DialogInterface.BUTTON_POSITIVE) {
 
 
+                String strsdName = tvName.getText().toString();
+                String strsdDept = tvDept.getText().toString();
+                String strsdTel = tvTel.getText().toString();
 
+                Intent intent = getIntent();
 
+                sdNoImport = intent.getStringExtra("sdNO");
+//                Log.v(TAG,strsdName);
+//                Log.v(TAG,Integer.toString(strsdNo));
 
-        switch (v.getId()){
-            case R.id.buttonUpdate_update: //업데이트 버튼 누르기
-                try {//정상적으로 구동 될 경우
+                try {
                     DB = memberinfo.getWritableDatabase();
-                    String query = "UPDATE member SET sdName = '"+strsdName+"', sdDept = '"+strsdDept+"',sdTel ='"+strsdTel+"' WHERE sdNo = '"+strsdNo+"';";
+                    String query = "UPDATE MEMBER SET sdName = '" + strsdName + "' , sdDept = '" + strsdDept + "' ,sdTel = '" + strsdTel + "' WHERE sdNo = '" + sdNoImport + "';";
                     DB.execSQL(query);
                     memberinfo.close();
-
-
                     new AlertDialog.Builder(MemberUpdate.this)
-                            .setTitle("알림")
-                            .setMessage("수정 완료했습니다.")
-                            .setNegativeButton("확인",null)
-                            .setCancelable(false)
+                            .setTitle("")
+                            .setMessage("입력이 완료 되었습니다.")
+                            .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(MemberUpdate.this, MemberSelect.class);
+                                    startActivity(intent);
+                                }
+                            })
                             .show();
-//                    Intent intent = new Intent(MemberUpdate.this,MainActivity.class);
-//                    startActivity(intent);
 
-                    finish();
-                } catch (Exception e) {//에러 나는 경우
+                } catch (Exception e) {//실패시
                     e.printStackTrace();
-                    Toast.makeText(MemberUpdate.this, "Update Error", Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(MemberUpdate.this)
+                            .setTitle("경고!")
+                            .setMessage("입력에 실패 하였습니다.")
+                            .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
+                            .setPositiveButton("확인", null)
+                            .show();
                 }
-
-
-        }
+            }
         }
     };
+    //아니오 눌렀을경우
+    DialogInterface.OnClickListener mClickNo = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            if (which == DialogInterface.BUTTON_NEGATIVE) {
+                new AlertDialog.Builder(MemberUpdate.this)
+                        .setTitle("")
+                        .setMessage("다시 입력해 주세요.")
+                        .setCancelable(false)//아무데나 눌렀을때 안꺼지게 하는거 (버튼을 통해서만 닫게)
+                        .setPositiveButton("확인", null)
+                        .show();
+            }
+        }
+    };
+
+//---------------------------------------------------------------------------------
+
 
     //메뉴바 생성 & 처음으로 돌아가기
     @Override
@@ -132,4 +185,9 @@ public class MemberUpdate extends AppCompatActivity {
     }
 
 
-}
+}//------------------------
+
+
+
+
+

@@ -23,6 +23,7 @@ public class MemberDelect extends AppCompatActivity {
     TextView tvNo, tvName, tvDept, tvTel;
     Button btnDelete;
     Memberinfo memberinfo;
+    SQLiteDatabase DB;
     String Name;
     int sdNo;
 
@@ -35,31 +36,39 @@ public class MemberDelect extends AppCompatActivity {
 
         //-----리스트에서 값 받아오기
         Intent intent = getIntent();
-
-        int sdNo = intent.getIntExtra("sdNO", 0); //받아오는 sdNo값이 defaultValue값으로 들어옴
+        sdNo = intent.getIntExtra("sdNO", 0); //받아오는 sdNo값이 defaultValue값으로 들어옴
         String sdName = intent.getStringExtra("sdName");
         String sdDept = intent.getStringExtra("sdDept");
         String sdTel = intent.getStringExtra("sdTel");
+        //---------------
 
+        //-------xml 연결
         tvNo = findViewById(R.id.tv_sdNo_deletePage);
         tvName = findViewById(R.id.tv_sdName_deletePage);
         tvDept = findViewById(R.id.tv_sdDept_deletePage);
         tvTel = findViewById(R.id.tv_sdTel_deletePage);
+        //--------------
 
 
+        //--------xml에 값 세팅
         tvNo.setText(Integer.toString(sdNo));//학생 정보 목록에서 롱클릭시 sdNo값 다르게 뜸!
-
         tvName.setText(sdName);
         tvDept.setText(sdDept);
         tvTel.setText(sdTel);
+        //----------------
+
 
         Name = sdName;
 
         memberinfo = new Memberinfo(MemberDelect.this);
 
 
+        btnDelete = findViewById(R.id.btn_delete_deletePage);
+
+
         findViewById(R.id.btn_delete_deletePage).setOnClickListener(onClickListener);
     }
+
         //---삭제버튼 onclick
         View.OnClickListener onClickListener = new View.OnClickListener() {
             SQLiteDatabase DB;
@@ -128,7 +137,7 @@ public class MemberDelect extends AppCompatActivity {
 
 
 
-//-------------------------------------------------Default end
+    //-------------------------------------------------Default end
     //메뉴바 생성 & 처음으로 돌아가기
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
